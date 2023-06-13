@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.leylabirgul.retrofitkotlin.R
-import com.leylabirgul.retrofitkotlin.R.id
 import com.leylabirgul.retrofitkotlin.adapter.RecyclerViewAdapter
 import com.leylabirgul.retrofitkotlin.model.CryptoModel
 import com.leylabirgul.retrofitkotlin.service.CryptoAPI
@@ -21,27 +20,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(),RecyclerViewAdapter.Listener {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var itemView:RecyclerView
     private val BASE_URL = "https://raw.githubusercontent.com/"
     private var cryptoModels: ArrayList<CryptoModel>? = null
     private var recylerViewAdapter:RecyclerViewAdapter?=null
-
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        recyclerView = findViewById(id.recyclerView)
-        itemView=findViewById(id.text_name)
-        itemView=findViewById(id.text_price)
-        val layoutManager : RecyclerView.LayoutManager=LinearLayoutManager(this)
-        recyclerView.layoutManager=layoutManager
+        recyclerView = findViewById(R.id.recyclerView)
+        val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
 
 
         loadData()
 
 
     }
-
     private fun loadData() {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -63,8 +56,8 @@ class MainActivity : AppCompatActivity(),RecyclerViewAdapter.Listener {
                 if (response.isSuccessful) {
 
                     response.body()?.let {
-                        cryptoModels=ArrayList(it)
-                        recylerViewAdapter= RecyclerViewAdapter(cryptoModels!!,this@MainActivity)
+                        cryptoModels = ArrayList(it)
+                        recylerViewAdapter = RecyclerViewAdapter(cryptoModels!!,this@MainActivity)
                         recyclerView.adapter=recylerViewAdapter
                     }
                 }
