@@ -1,11 +1,8 @@
 package com.leylabirgul.retrofitkotlin.view
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.leylabirgul.retrofitkotlin.R
@@ -18,23 +15,22 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(),RecyclerViewAdapter.Listener {
+class MainActivity : AppCompatActivity(), RecyclerViewAdapter.Listener {
     private lateinit var recyclerView: RecyclerView
     private val BASE_URL = "https://raw.githubusercontent.com/"
     private var cryptoModels: ArrayList<CryptoModel>? = null
-    private var recylerViewAdapter:RecyclerViewAdapter?=null
+    private var recylerViewAdapter: RecyclerViewAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         recyclerView = findViewById(R.id.recyclerView)
-        val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
 
-
         loadData()
-
-
     }
+
     private fun loadData() {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -47,8 +43,6 @@ class MainActivity : AppCompatActivity(),RecyclerViewAdapter.Listener {
             override fun onFailure(call: Call<List<CryptoModel>>, t: Throwable) {
                 t.printStackTrace()
             }
-
-
             override fun onResponse(
                 call: Call<List<CryptoModel>>,
                 response: Response<List<CryptoModel>>
@@ -57,18 +51,15 @@ class MainActivity : AppCompatActivity(),RecyclerViewAdapter.Listener {
 
                     response.body()?.let {
                         cryptoModels = ArrayList(it)
-                        recylerViewAdapter = RecyclerViewAdapter(cryptoModels!!,this@MainActivity)
-                        recyclerView.adapter=recylerViewAdapter
+                        recylerViewAdapter = RecyclerViewAdapter(cryptoModels!!, this@MainActivity)
+                        recyclerView.adapter = recylerViewAdapter
                     }
                 }
-
             }
-
         })
-
     }
 
     override fun onItemClick(cryptoModel: CryptoModel) {
-     Toast.makeText(this,"Clicked:${cryptoModel.currency}",Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Clicked:${cryptoModel.currency}", Toast.LENGTH_LONG).show()
     }
 }

@@ -29,7 +29,6 @@ class RecyclerViewAdapter(
         "#F7082C"
     )
 
-
     class RowHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(
@@ -58,6 +57,5 @@ class RecyclerViewAdapter(
     }
     override fun onBindViewHolder(holder: RowHolder, position: Int) {
         holder.bind(cryptoList[position], colors, position, listener)
-
     }
 }
